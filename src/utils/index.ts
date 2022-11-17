@@ -1,27 +1,32 @@
 import { useEffect, useState } from "react";
 
-export const isFalsy = (value) => (value === 0 ? false : !value);
+let number = [1, 2, "3"];
 
-export const isVoid = (value) =>
+export const isFalsy = (value: unknown): boolean =>
+  value === 0 ? false : !value;
+
+export const isVoid = (value: unknown): boolean =>
   value === undefined || value === null || value === "";
 
-export const cleanObj = (obj) => {
+export const cleanObj = (obj: object) => {
   if (!Object) return {};
   const result = { ...obj };
   Object.keys(result).map((key) => {
+    //@ts-ignore
     const value = result[key];
+    //@ts-ignore
     if (isVoid(value)) delete result[key];
   });
   return result;
 };
 
-export const useMount = (callback) => {
+export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
   }, []);
 };
 
-export const debounce = (callback, delay) => {
+export const debounce = (callback: () => void, delay: number) => {
   let timeout;
   if (timeout) {
     clearTimeout(timeout);
@@ -29,7 +34,8 @@ export const debounce = (callback, delay) => {
   timeout = setTimeout(() => callback(), delay);
 };
 
-export const useDebounce = (value, delay) => {
+// 需要改成泛型
+export const useDebounce = <V>(value: V, delay?: number): any => {
   const [debouncedValue, setDebouncedValue] = useState(value);
   useEffect(() => {
     const timeout = setTimeout(() => setDebouncedValue(value), delay);

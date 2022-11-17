@@ -1,6 +1,21 @@
-import { useEffect, useState } from "react";
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  title: string;
+  organization: string;
+}
 
-const SearchPanel = ({ param, setParam, users }) => {
+interface SearchPanelProps {
+  users: User[];
+  param: {
+    name: string;
+    personId: string;
+  };
+  setParam: (param: SearchPanelProps["param"]) => void;
+}
+
+const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
   return (
     <form action="">
       <div>
@@ -10,7 +25,7 @@ const SearchPanel = ({ param, setParam, users }) => {
           onChange={(e) => setParam({ ...param, name: e.target.value })}
         />
         <select
-          value={param.id}
+          value={param.personId}
           onChange={(e) => setParam({ ...param, personId: e.target.value })}
         >
           <option value="">负责人</option>

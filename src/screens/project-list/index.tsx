@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import List from "./List";
 import SearchPanel from "./SearchPanel";
 import { cleanObj, useMount, useDebounce } from "utils";
-import { stringify } from "qs";
+import * as qs from "qs";
 
 const apiUrl = process.env.REACT_APP_API_URL;
 const ProjectListScreen = () => {
@@ -16,12 +16,12 @@ const ProjectListScreen = () => {
   // 展示任务列表
   const [list, setList] = useState([]);
 
-  const debouncedParam = useDebounce(param, 2000);
+  const debouncedParam = useDebounce(param, 500);
 
   const fetchList = async () => {
     try {
       const response = await fetch(
-        `${apiUrl}/projects?${stringify(cleanObj(debouncedParam))}`
+        `${apiUrl}/projects?${qs.stringify(cleanObj(debouncedParam))}`
       );
       const data = await response.json();
       setList(data);
