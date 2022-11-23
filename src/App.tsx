@@ -8,7 +8,7 @@ function App() {
   return (
     <>
       <LoginScreen />
-      <ProjectListScreen />
+      {/* <ProjectListScreen /> */}
     </>
   );
 }
