@@ -6,13 +6,12 @@ export const isFalsy = (value: unknown): boolean =>
 export const isVoid = (value: unknown): boolean =>
   value === undefined || value === null || value === "";
 
-export const cleanObj = (obj: object) => {
+// typescript的object范围很广，不仅是字典对象，因此不能直接使用object
+export const cleanObj = (obj: { [key: string]: unknown }) => {
   if (!Object) return {};
   const result = { ...obj };
-  Object.keys(result).map((key) => {
-    //@ts-ignore
+  Object.keys(result).forEach((key) => {
     const value = result[key];
-    //@ts-ignore
     if (isVoid(value)) delete result[key];
   });
   return result;
@@ -21,7 +20,9 @@ export const cleanObj = (obj: object) => {
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
-  }, [callback]);
+    // TODO 加上callback依赖项会无限循环
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 };
 
 export const debounce = (callback: () => void, delay: number) => {
