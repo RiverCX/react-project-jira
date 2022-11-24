@@ -9,6 +9,7 @@ interface AuthForm {
   password: string;
 }
 
+// 初始化，获取token，发送请求获取user数据
 const bootstrapUser = async () => {
   let user = null;
   const token = auth.getToken();
@@ -19,6 +20,7 @@ const bootstrapUser = async () => {
   return user;
 };
 
+// 创建context对象
 const AuthContext = React.createContext<
   | {
       user: User | null;
@@ -30,14 +32,16 @@ const AuthContext = React.createContext<
 >(undefined);
 AuthContext.displayName = "AuthContext";
 
+// 在Provider中定义全局状态User以及相关函数
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
 
-  // point free
+  // 在原来的fetch请求处理基础上，加上user状态的处理
   const login = (form: AuthForm) => auth.login(form).then(setUser);
   const register = (form: AuthForm) => auth.register(form).then(setUser);
   const logout = () => auth.logout().then(() => setUser(null));
 
+  // user初始化
   useMount(() => {
     bootstrapUser().then(setUser);
   });
@@ -50,6 +54,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
+// 包装useContext
 export const useAuth = () => {
   const context = React.useContext(AuthContext);
   if (!context) {
