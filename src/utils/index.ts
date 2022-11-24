@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { setConstantValue } from "typescript";
 
 export const isFalsy = (value: unknown): boolean =>
   value === 0 ? false : !value;
@@ -22,7 +21,7 @@ export const cleanObj = (obj: object) => {
 export const useMount = (callback: () => void) => {
   useEffect(() => {
     callback();
-  }, []);
+  }, [callback]);
 };
 
 export const debounce = (callback: () => void, delay: number) => {
