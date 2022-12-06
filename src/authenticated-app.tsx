@@ -11,7 +11,9 @@ export const AuthenticatedApp = () => {
   return (
     <Container>
       <Header between={true}>
+        {/*  传递props给styled component */}
         <HeaderLeft gap={true}>
+          {/*  以react component形式导入的图片 */}
           <SoftwareLogo width={"18rem"} color={"rgb(38, 132, 255)"} />
           <h3>项目</h3>
           <h3>用户</h3>

@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 
-// 定义一个一维排布的容器
+// 定义一个一维排布的Flex容器
 export const Row = styled.div<{
   gap?: number | boolean;
   between?: boolean;
