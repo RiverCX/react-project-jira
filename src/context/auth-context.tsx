@@ -3,6 +3,8 @@ import { User } from "screens/project-list/SearchPanel";
 import * as auth from "auth-provider";
 import { http } from "utils/http";
 import { useMount } from "utils";
+import { useAsync } from "utils/use-async";
+import { FullPageLoading } from "components/lib";
 
 interface AuthForm {
   username: string;
@@ -34,7 +36,15 @@ AuthContext.displayName = "AuthContext";
 
 // 在Provider中定义全局状态User以及相关函数
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const {
+    data: user,
+    setData: setUser,
+    error,
+    run,
+    isIdle,
+    isLoading,
+    isError,
+  } = useAsync<User | null>();
 
   // 在原来的fetch请求处理基础上，加上user状态的处理
   const login = (form: AuthForm) => auth.login(form).then(setUser);
@@ -43,8 +53,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   // user初始化
   useMount(() => {
-    bootstrapUser().then(setUser);
+    run(bootstrapUser());
   });
+
+  if (isIdle || isLoading) {
+    return <FullPageLoading />;
+  }
 
   return (
     <AuthContext.Provider
