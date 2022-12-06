@@ -1,10 +1,12 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import List from "./List";
 import SearchPanel from "./SearchPanel";
-import { cleanObj, useMount, useDebounce } from "utils";
-import { useHttp } from "utils/http";
+import { useDebounce } from "utils";
 import styled from "@emotion/styled";
+import { Typography } from "antd";
+import { useProjects } from "utils/project";
+import { useUsers } from "utils/user";
 
 const ProjectListScreen = () => {
   // 受控组件的状态
@@ -12,29 +14,20 @@ const ProjectListScreen = () => {
     name: "",
     personId: "",
   });
-  // 负责人列表
-  const [users, setUsers] = useState([]);
-  // 展示任务列表
-  const [list, setList] = useState([]);
-
   const debouncedParam = useDebounce(param, 500);
-
-  const client = useHttp();
-
-  useEffect(() => {
-    client("projects", { data: cleanObj(debouncedParam) }).then(setList);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debouncedParam]);
-
-  useMount(() => {
-    client("users").then(setUsers);
-  });
+  // 负责人列表
+  const { data: users } = useUsers();
+  // 任务列表
+  const { isLoading, error, data: list } = useProjects(debouncedParam);
 
   return (
     <Container>
       <h1>项目列表</h1>
-      <SearchPanel param={param} setParam={setParam} users={users} />
-      <List list={list} users={users} />
+      <SearchPanel param={param} setParam={setParam} users={users || []} />
+      {error ? (
+        <Typography.Text type="danger">{error.message}</Typography.Text>
+      ) : null}
+      <List loading={isLoading} dataSource={list || []} users={users || []} />
     </Container>
   );
 };
