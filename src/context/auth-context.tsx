@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import React, { ReactNode } from "react";
 import { User } from "screens/project-list/SearchPanel";
 import * as auth from "auth-provider";
 import { http } from "utils/http";
@@ -39,11 +39,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const {
     data: user,
     setData: setUser,
-    error,
     run,
     isIdle,
     isLoading,
-    isError,
   } = useAsync<User | null>();
 
   // 在原来的fetch请求处理基础上，加上user状态的处理
