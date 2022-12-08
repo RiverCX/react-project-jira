@@ -15,6 +15,7 @@
     "@types/react": "^17.0.0",
     "@types/react-beautiful-dnd": "^13.1.2",
     "@types/react-dom": "^17.0.0",
+    "@welldone-software/why-did-you-render": "^7.0.1",
     "antd": "^4.16.13",
     "craco-less": "^1.20.0",
     "dayjs": "^1.10.7",
