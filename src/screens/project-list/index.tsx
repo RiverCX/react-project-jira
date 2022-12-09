@@ -1,5 +1,3 @@
-import React from "react";
-import { useState } from "react";
 import List from "./List";
 import SearchPanel from "./SearchPanel";
 import { useDebounce, useDocumentTitle } from "utils";
@@ -7,18 +5,16 @@ import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
-import { useUrlQueryParam } from "utils/url";
+import { useProjectsSearchParams } from "./util";
 
 const ProjectListScreen = () => {
-  // 受控组件的状态
-  const [param, setParam] = useUrlQueryParam(["name", "personId"]);
-  const debouncedParam = useDebounce(param, 500);
+  useDocumentTitle("项目列表", false);
+  // 搜索参数
+  const [param, setParam] = useProjectsSearchParams();
   // 负责人列表
   const { data: users } = useUsers();
   // 任务列表
-  const { isLoading, error, data: list } = useProjects(debouncedParam);
-
-  useDocumentTitle("项目列表", false);
+  const { isLoading, error, data: list } = useProjects(useDebounce(param, 200));
 
   return (
     <Container>
