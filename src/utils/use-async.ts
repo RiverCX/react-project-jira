@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useMountedRef } from "utils";
 
 interface State<D> {
   stat: "idle" | "loading" | "error" | "success";
@@ -31,6 +32,7 @@ export const useAsync = <D>(
     ...defaultInitialState,
     ...initialState,
   });
+  const mountedRef = useMountedRef();
   // 使用useState保存函数
   const [retry, setRetry] = useState(() => () => {});
 
@@ -58,7 +60,9 @@ export const useAsync = <D>(
     }
 
     setRetry(() => () => {
+      //  保存异步操作retry的操作
       if (runConfig?.retry) {
+        // 调用run，调用异步操作函数
         run(runConfig?.retry(), runConfig);
       }
     });
@@ -66,7 +70,7 @@ export const useAsync = <D>(
     setState({ ...state, stat: "loading" });
     return promise
       .then((data) => {
-        setData(data);
+        if (mountedRef.current) setData(data);
         return data;
       })
       .catch((error) => {
@@ -84,7 +88,7 @@ export const useAsync = <D>(
     run,
     setData,
     setError,
-    // 被调用时，重新嗲用run
+    // 被调用时，重新调用run
     retry,
     ...state,
   };
