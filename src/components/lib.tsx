@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Spin, Typography } from "antd";
+import { Button, Spin, Typography } from "antd";
 import { DevTools } from "jira-dev-tool";
 
 // 定义一个一维排布的Flex容器
@@ -24,6 +24,7 @@ export const Row = styled.div<{
   }
 `;
 
+// 全屏幕容器
 const FullPage = styled.div`
   height: 100vh;
   display: flex;
@@ -31,12 +32,14 @@ const FullPage = styled.div`
   align-items: center;
 `;
 
+// Loading页面
 export const FullPageLoading = () => (
   <FullPage>
     <Spin size="large"></Spin>
   </FullPage>
 );
 
+// 错误页面
 export const FullPageErrorFallback = ({
   error,
 }: {
@@ -47,3 +50,8 @@ export const FullPageErrorFallback = ({
     <Typography.Text type="danger">{error?.message}</Typography.Text>
   </FullPage>;
 };
+
+// padding为0的Button
+export const ButtonNoPadding = styled(Button)`
+  padding: 0;
+`;
