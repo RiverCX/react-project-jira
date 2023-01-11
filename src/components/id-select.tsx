@@ -2,6 +2,9 @@ import React from "react";
 import { Select } from "antd";
 import { Raw } from "types";
 
+// 统一ID的 Select组件
+
+// 实现属性透传
 type SelectProps = React.ComponentProps<typeof Select>;
 
 interface IdSelectProps
@@ -35,4 +38,5 @@ export const IdSelect = (props: IdSelectProps) => {
   );
 };
 
+// 对于没有意义的值，value转换为0
 const toNumber = (value: unknown) => (isNaN(Number(value)) ? 0 : Number(value));

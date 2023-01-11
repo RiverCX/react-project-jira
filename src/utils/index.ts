@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
+// 工具函数
+
 export const isFalsy = (value: unknown): boolean =>
   value === 0 ? false : !value;
 

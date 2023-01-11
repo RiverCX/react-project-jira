@@ -1,6 +1,8 @@
 import { useCallback, useState } from "react";
 import { useMountedRef } from "utils";
 
+// 异步操作的状态管理Hook
+
 interface State<D> {
   stat: "idle" | "loading" | "error" | "success";
   error: Error | null;
@@ -81,8 +83,9 @@ export const useAsync = <D>(
           return data;
         })
         .catch((error) => {
+          // catch会消化掉异常
           setError(error);
-          if (config.throwOnError) return Promise.reject(error);
+          if (config.throwOnError) return Promise.reject(error); // 再抛出一个异常
           return error;
         });
     },

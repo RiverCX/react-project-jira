@@ -38,7 +38,7 @@ export const http = async (
     .fetch(`${apiUrl}/${endpoint}`, config)
     .then(async (response) => {
       if (response.status === 401) {
-        // 未登录或token失效
+        // 未登录或token失效（restful规范）
         await auth.logout();
         window.location.reload();
         return Promise.reject({ message: "请重新登录" });
@@ -47,7 +47,7 @@ export const http = async (
       if (response.ok) {
         return data;
       } else {
-        return Promise.reject(data);
+        return Promise.reject(data); // fetch 需要手动抛出错误
       }
     });
 };

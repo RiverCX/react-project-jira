@@ -3,6 +3,8 @@ import { Popover, List, Typography, Divider } from "antd";
 import { useProjects } from "utils/project";
 import { ButtonNoPadding } from "./lib";
 
+// 收藏项目的Popover组件
+
 export const ProjectPopover = (props: {
   setProjectModalOpen: (isOpen: boolean) => void;
 }) => {

@@ -1,6 +1,8 @@
 import React from "react";
 import { Rate } from "antd";
 
+// Pin收藏组件
+
 interface PinProps extends React.ComponentProps<typeof Rate> {
   checked: boolean;
   onCheckedChange?: (checked: boolean) => void;

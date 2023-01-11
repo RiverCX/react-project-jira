@@ -8,6 +8,8 @@ import { Pin } from "components/pin";
 import { useEditProject } from "utils/project";
 import { ButtonNoPadding } from "components/lib";
 
+// Projects列表
+
 export interface Project {
   id: number;
   name: string;
@@ -17,6 +19,7 @@ export interface Project {
   created: number;
 }
 
+// TableProps是一个泛型
 interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;

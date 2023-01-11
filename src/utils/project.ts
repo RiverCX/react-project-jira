@@ -4,7 +4,9 @@ import { cleanObj } from "utils";
 import { useHttp } from "./http";
 import { useAsync } from "./use-async";
 
-// 获取项目列表的请求
+// 封装所有对projects的异步操作
+
+// 获取项目列表
 export const useProjects = (param?: Partial<Project>) => {
   const { run, ...result } = useAsync<Project[]>();
   const client = useHttp();
@@ -20,7 +22,7 @@ export const useProjects = (param?: Partial<Project>) => {
   return result;
 };
 
-// 编辑项目列表的请求
+// 编辑项目列表
 export const useEditProject = () => {
   const { run, ...result } = useAsync();
   const client = useHttp();
@@ -36,7 +38,7 @@ export const useEditProject = () => {
   return { mutate, ...result };
 };
 
-// t添加项目的请求
+// 添加项目
 export const useAddProject = () => {
   const { run, ...result } = useAsync();
   const client = useHttp();
@@ -46,6 +48,20 @@ export const useAddProject = () => {
       client(`projects/${params.id}`, {
         data: params,
         method: "POST",
+      })
+    );
+  };
+  return { mutate, ...result };
+};
+
+// 删除项目
+export const useDeleteProject = () => {
+  const { run, ...result } = useAsync();
+  const client = useHttp();
+  const mutate = (params: Partial<Project>) => {
+    return run(
+      client(`projects/${params.id}`, {
+        method: "DELETE",
       })
     );
   };

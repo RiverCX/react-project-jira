@@ -11,10 +11,13 @@ export const LoginScreen = ({
   onError: (error: Error) => void;
 }) => {
   const { login } = useAuth();
-  const { isLoading, run } = useAsync(undefined, { throwOnError: true });
+  const { isLoading, run, error } = useAsync(undefined);
 
   const handleSubmit = (values: { username: string; password: string }) => {
-    run(login(values).catch((error) => onError(error)));
+    // run(login(values).catch((error) => onError(error)));
+    run(login(values)).finally(() => {
+      if (error) onError(error);
+    });
   };
 
   return (

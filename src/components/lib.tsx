@@ -44,12 +44,12 @@ export const FullPageErrorFallback = ({
   error,
 }: {
   error: Error | null;
-}): any => {
+}): any => (
   <FullPage>
     <DevTools />
     <Typography.Text type="danger">{error?.message}</Typography.Text>
-  </FullPage>;
-};
+  </FullPage>
+);
 
 // padding为0的Button
 export const ButtonNoPadding = styled(Button)`

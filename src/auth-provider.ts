@@ -1,6 +1,7 @@
 import { User } from "screens/project-list/SearchPanel";
 
 // 处理登入、注册、登出请求以及对token持久化处理
+// 可以用第三方如Firebase的SDK
 
 const localStorageKey = "__auth_provider_token__";
 const apiUrl = process.env.REACT_APP_API_URL;

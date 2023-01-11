@@ -3,6 +3,9 @@ import React from "react";
 import { Input, Form } from "antd";
 import { Project } from "./List";
 import { UserSelect } from "components/user-select";
+
+// 项目搜索框
+
 export interface User {
   id: number;
   name: string;
@@ -18,7 +21,7 @@ interface SearchPanelProps {
   setParam: (param: SearchPanelProps["param"]) => void;
 }
 
-const SearchPanel = ({ param, setParam, users }: SearchPanelProps) => {
+const SearchPanel = ({ param, setParam }: SearchPanelProps) => {
   return (
     <Form layout="inline" css={{ marginBottom: "2rem" }}>
       <Form.Item>
