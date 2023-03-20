@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { Dict } from "types";
 
 // 工具函数
 
@@ -9,7 +10,7 @@ export const isVoid = (value: unknown): boolean =>
   value === undefined || value === null || value === "";
 
 // typescript的object范围很广，不仅是字典对象，因此不能直接使用object
-export const cleanObj = (obj: { [key: string]: unknown }) => {
+export const cleanObj = (obj: Dict) => {
   if (!Object) return {};
   const result = { ...obj };
   Object.keys(result).forEach((key) => {
