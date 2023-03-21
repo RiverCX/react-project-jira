@@ -1,7 +1,7 @@
 /* @jsxImportSource @emotion/react */
 import React from "react";
 import { Input, Form } from "antd";
-import { Project } from "./List";
+import { Project } from "./project-list";
 import { UserSelect } from "components/user-select";
 
 // 项目搜索框
@@ -21,7 +21,7 @@ interface SearchPanelProps {
   setParam: (param: SearchPanelProps["param"]) => void;
 }
 
-const SearchPanel = ({ param, setParam }: SearchPanelProps) => {
+export const SearchPanel = ({ param, setParam }: SearchPanelProps) => {
   return (
     <Form layout="inline" css={{ marginBottom: "2rem" }}>
       <Form.Item>
@@ -42,5 +42,3 @@ const SearchPanel = ({ param, setParam }: SearchPanelProps) => {
     </Form>
   );
 };
-
-export default SearchPanel;

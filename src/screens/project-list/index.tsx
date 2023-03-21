@@ -1,5 +1,5 @@
-import List from "./List";
-import SearchPanel from "./SearchPanel";
+import { List } from "./project-list";
+import { SearchPanel } from "./search-panel";
 import { useDebounce, useDocumentTitle } from "utils";
 import styled from "@emotion/styled";
 import { Typography } from "antd";
@@ -8,7 +8,7 @@ import { useUsers } from "utils/user";
 import { useProjectsSearchParams } from "./util";
 import { Row } from "components/lib";
 
-const ProjectListScreen = (props: { projectButton: JSX.Element }) => {
+export const ProjectListScreen = (props: { projectButton: JSX.Element }) => {
   useDocumentTitle("项目列表", false);
   // 搜索参数
   const [param, setParam] = useProjectsSearchParams();
@@ -44,10 +44,6 @@ const ProjectListScreen = (props: { projectButton: JSX.Element }) => {
   );
 };
 
-ProjectListScreen.whyDidYouRender = false;
-
 const Container = styled.div`
   padding: 3.2rem;
 `;
-
-export default ProjectListScreen;

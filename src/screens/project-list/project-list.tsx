@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "./SearchPanel";
+import { User } from "./search-panel";
 import { Dropdown, Table } from "antd";
 import dayjs from "dayjs";
 import { TableProps } from "antd/es/table";
@@ -30,6 +30,7 @@ export const List = ({ users, ...props }: ListProps) => {
   const { mutate } = useEditProject();
   const pinProject = (id: number) => (pin: boolean) =>
     mutate({ id, pin }).then(props.refresh);
+
   return (
     <Table
       rowKey={"id"}
@@ -109,4 +110,3 @@ export const List = ({ users, ...props }: ListProps) => {
     />
   );
 };
-export default List;

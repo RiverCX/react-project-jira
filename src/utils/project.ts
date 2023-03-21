@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import { Project } from "screens/project-list/List";
+import { Project } from "screens/project-list/project-list";
 import { cleanObj } from "utils";
 import { useHttp } from "./http";
 import { useAsync } from "./use-async";
