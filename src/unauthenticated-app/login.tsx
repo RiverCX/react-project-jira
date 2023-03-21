@@ -11,13 +11,11 @@ export const LoginScreen = ({
   onError: (error: Error) => void;
 }) => {
   const { login } = useAuth();
-  const { isLoading, run, error } = useAsync(undefined);
+  // 不能在此处使用error状态，因为此时error还没有更新（异步更新）
+  const { isLoading, run } = useAsync(undefined, { throwOnError: true });
 
   const handleSubmit = (values: { username: string; password: string }) => {
-    // run(login(values).catch((error) => onError(error)));
-    run(login(values)).finally(() => {
-      if (error) onError(error);
-    });
+    run(login(values).catch((error) => onError(error)));
   };
 
   return (
