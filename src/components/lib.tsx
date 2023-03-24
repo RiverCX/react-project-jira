@@ -47,7 +47,7 @@ export const FullPageErrorFallback = ({
 }): any => (
   <FullPage>
     <DevTools />
-    <Typography.Text type="danger">{error?.message}</Typography.Text>
+    <ErrorBox error={error} />
   </FullPage>
 );
 
@@ -55,3 +55,13 @@ export const FullPageErrorFallback = ({
 export const ButtonNoPadding = styled(Button)`
   padding: 0;
 `;
+
+const isError = (value: any): value is Error => {
+  return value?.message;
+};
+
+export const ErrorBox = ({ error }: { error: unknown }) => {
+  if (isError(error))
+    return <Typography.Text type="danger">{error.message}</Typography.Text>;
+  return null;
+};

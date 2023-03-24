@@ -1,4 +1,5 @@
 import { useCallback, useEffect } from "react";
+import { useQuery } from "react-query";
 import { Project } from "screens/project-list/project-list";
 import { useHttp } from "./http";
 import { useAsync } from "./use-async";
@@ -7,18 +8,12 @@ import { useAsync } from "./use-async";
 
 // 获取项目列表
 export const useProjects = (param?: Partial<Project>) => {
-  const { run, ...result } = useAsync<Project[]>();
   const client = useHttp();
 
-  const fetchProjects = useCallback(
-    () => client("projects", { data: param }),
-    [client, param]
+  // param 改变时，useQuery重新获取数据
+  return useQuery<Project[]>(["projects", param], () =>
+    client("projects", { data: param })
   );
-
-  useEffect(() => {
-    run(fetchProjects(), { retry: fetchProjects });
-  }, [param, run, fetchProjects]); // param变化重新获取
-  return result;
 };
 
 // 编辑项目列表
