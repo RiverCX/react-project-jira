@@ -16,3 +16,20 @@ export const useProjectsSearchParams = () => {
     setParam,
   ] as const;
 };
+
+// 项目Modal搜索的参数状态管理
+
+export const useProjectModal = () => {
+  const [{ projectCreate }, setProjectCreate] = useUrlQueryParam([
+    "projectCreate",
+  ]);
+
+  const openModal = () => setProjectCreate({ projectCreate: true });
+  const closeModal = () => setProjectCreate({ projectCreate: undefined });
+
+  return {
+    isModalOpen: projectCreate === "true", // 从URL获取的参数都是string类型
+    openModal,
+    closeModal,
+  };
+};

@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { Typography } from "antd";
 import { useProjects } from "utils/project";
 import { useUsers } from "utils/user";
-import { useProjectsSearchParams } from "./util";
+import { useProjectModal, useProjectsSearchParams } from "./util";
 import { ButtonNoPadding, Row } from "components/lib";
 
 export const ProjectListScreen = () => {
@@ -22,11 +22,13 @@ export const ProjectListScreen = () => {
     retry,
   } = useProjects(useDebounce(param, 200));
 
+  const { openModal } = useProjectModal();
+
   return (
     <Container>
       <Row between={true}>
         <h1>项目列表</h1>
-        <ButtonNoPadding type="link" onClick={() => {}}>
+        <ButtonNoPadding type="link" onClick={openModal}>
           编辑项目
         </ButtonNoPadding>
       </Row>
