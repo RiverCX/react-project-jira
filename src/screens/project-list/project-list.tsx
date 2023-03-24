@@ -22,7 +22,6 @@ export interface Project {
 interface ListProps extends TableProps<Project> {
   users: User[];
   refresh?: () => void;
-  projectButton: JSX.Element;
 }
 
 export const List = ({ users, ...props }: ListProps) => {
@@ -88,7 +87,11 @@ export const List = ({ users, ...props }: ListProps) => {
                   items: [
                     {
                       key: "edit",
-                      label: props.projectButton,
+                      label: (
+                        <ButtonNoPadding type="link" onClick={() => {}}>
+                          编辑项目
+                        </ButtonNoPadding>
+                      ),
                     },
                     {
                       key: "delete",
