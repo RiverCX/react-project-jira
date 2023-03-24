@@ -1,8 +1,7 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useEffect } from "react";
 import { User } from "screens/project-list/search-panel";
 import * as auth from "auth-provider";
 import { http } from "utils/http";
-import { useMount } from "utils";
 import { useAsync } from "utils/use-async";
 import { FullPageErrorFallback, FullPageLoading } from "components/lib";
 
@@ -54,9 +53,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const logout = () => auth.logout().then(() => setUser(null));
 
   // 初次渲染时 user初始化
-  useMount(() => {
+  useEffect(() => {
     run(bootstrapUser());
-  });
+  }, [run]);
 
   // 全屏加载页面
   if (isIdle || isLoading) {

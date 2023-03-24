@@ -2,7 +2,7 @@ import styled from "@emotion/styled";
 import { Popover, List, Typography, Divider } from "antd";
 import { useProjects } from "utils/project";
 
-// 收藏项目的Popover组件
+// 项目的Popover组件
 
 export const ProjectPopover = (props: { projectButton: JSX.Element }) => {
   const { data: projects } = useProjects();

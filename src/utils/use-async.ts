@@ -28,7 +28,7 @@ run函数接受一个Promise实例，给Promise绑定回调函数，更新state
 const useSafeDispatch = <T>(dispatch: (...args: T[]) => void) => {
   const mountedRef = useMountedRef();
   return useCallback(
-    (...args: T[]) => (mountedRef.current ? dispatch(...args) : void 0),
+    (...args: T[]) => (mountedRef.current ? dispatch(...args) : undefined),
     [dispatch, mountedRef]
   );
 };
@@ -45,7 +45,9 @@ export const useAsync = <D>(
       ...initialState,
     }
   );
+
   const safeDispatch = useSafeDispatch(dispatch);
+
   // 使用useState保存函数
   const [retry, setRetry] = useState(() => () => {});
 
@@ -88,15 +90,16 @@ export const useAsync = <D>(
       });
 
       safeDispatch({ stat: "loading" });
+
       return promise
         .then((data) => {
           setData(data);
           return data;
         })
         .catch((error) => {
-          // catch会消化掉异常
+          // catch会消化掉异常，返回一个fulfilled的Promise
           setError(error);
-          if (config.throwOnError) return Promise.reject(error); // 再抛出一个异常
+          if (config.throwOnError) return Promise.reject(error); // 再抛出一个异常，返回一个rejected的Promise
           return error;
         });
     },

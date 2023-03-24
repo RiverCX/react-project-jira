@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { User } from "screens/project-list/search-panel";
-import { cleanObj } from "utils";
 import { useHttp } from "./http";
 import { useAsync } from "./use-async";
 
@@ -12,7 +11,7 @@ export const useUsers = (param?: Partial<User>) => {
   const client = useHttp();
 
   useEffect(() => {
-    run(client("users", { data: cleanObj(param || {}) }));
+    run(client("users", { data: param }));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [param]);
 

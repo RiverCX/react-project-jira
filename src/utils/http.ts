@@ -2,6 +2,7 @@ import qs from "qs";
 import * as auth from "auth-provider";
 import { useAuth } from "context/auth-context";
 import { useCallback } from "react";
+import { cleanObj } from "utils";
 
 // 封装Restful请求，每个请求都要包含token
 
@@ -26,12 +27,12 @@ export const http = async (
     },
     ...customConfig,
   };
-  // 处理get请求的参数
+  // 处理get请求的数据
   if (config.method === "GET") {
-    endpoint += `?${qs.stringify(data)}`;
+    endpoint += `?${qs.stringify(cleanObj(data || {}))}`;
   } else {
-    // 处理post请求的参数
-    config.body = JSON.stringify(data || {});
+    // 处理其他请求的数据
+    config.body = JSON.stringify(cleanObj(data || {}));
   }
 
   return window

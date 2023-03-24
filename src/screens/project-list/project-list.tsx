@@ -1,4 +1,3 @@
-import React from "react";
 import { User } from "./search-panel";
 import { Dropdown, Table } from "antd";
 import dayjs from "dayjs";

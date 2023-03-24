@@ -10,7 +10,7 @@ export const isVoid = (value: unknown): boolean =>
   value === undefined || value === null || value === "";
 
 // typescript的object范围很广，不仅是字典对象，因此不能直接使用object
-export const cleanObj = (obj: Dict) => {
+export const cleanObj = (obj: Dict | {}) => {
   if (!Object) return {};
   const result = { ...obj };
   Object.keys(result).forEach((key) => {
@@ -18,14 +18,6 @@ export const cleanObj = (obj: Dict) => {
     if (isVoid(value)) delete result[key];
   });
   return result;
-};
-
-export const useMount = (callback: () => void) => {
-  useEffect(() => {
-    callback();
-    // TODO 加上callback依赖项会无限循环
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 };
 
 export const debounce = (callback: () => void, delay: number) => {
@@ -85,4 +77,5 @@ export const useMountedRef = () => {
   return mountedRef;
 };
 
+// 强制刷新页面
 export const resetRoute = () => (window.location.href = window.location.origin);
