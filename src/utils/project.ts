@@ -1,6 +1,11 @@
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { QueryKey, useMutation, useQuery } from "react-query";
 import { Project } from "screens/project-list/project-list";
 import { useHttp } from "./http";
+import {
+  useAddConfig,
+  useDeleteConfig,
+  useEditConfig,
+} from "./use-optimistic-options";
 
 // 使用react-query管理所有对projects的异步操作的状态
 
@@ -28,9 +33,8 @@ export const useProject = (id?: number) => {
 };
 
 // 编辑项目
-export const useEditProject = () => {
+export const useEditProject = (queryKey: QueryKey) => {
   const client = useHttp();
-  const queryClient = useQueryClient();
 
   return useMutation(
     (params: Partial<Project>) =>
@@ -38,14 +42,13 @@ export const useEditProject = () => {
         data: params,
         method: "PATCH",
       }),
-    { onSuccess: () => queryClient.invalidateQueries(["projects"]) } // 成功后刷新
+    useEditConfig(queryKey) // 乐观更新配置
   );
 };
 
 // 添加项目
-export const useAddProject = () => {
+export const useAddProject = (queryKey: QueryKey) => {
   const client = useHttp();
-  const queryClient = useQueryClient();
 
   return useMutation(
     (params: Partial<Project>) =>
@@ -53,20 +56,19 @@ export const useAddProject = () => {
         data: params,
         method: "POST",
       }),
-    { onSuccess: () => queryClient.invalidateQueries(["projects"]) } // 成功后刷新
+    useAddConfig(queryKey) // 乐观更新配置
   );
 };
 
 // 删除项目
-export const useDeleteProject = () => {
+export const useDeleteProject = (queryKey: QueryKey) => {
   const client = useHttp();
-  const queryClient = useQueryClient();
 
   return useMutation(
     (id: number) =>
       client(`projects/${id}`, {
         method: "DELETE",
       }),
-    { onSuccess: () => queryClient.invalidateQueries(["projects"]) } // 成功后刷新
+    useDeleteConfig(queryKey) // 乐观更新配置
   );
 };

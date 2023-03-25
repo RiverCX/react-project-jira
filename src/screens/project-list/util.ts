@@ -18,6 +18,13 @@ export const useProjectsSearchParams = () => {
   ] as const;
 };
 
+// 当前搜索列表的QueryKey
+
+export const useProjectsQueryKey = () => {
+  const [param, _] = useProjectsSearchParams();
+  return ["projects", param];
+};
+
 // 项目Modal的搜索参数状态管理
 
 export const useProjectModal = () => {

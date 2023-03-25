@@ -6,16 +6,20 @@ import { UserSelect } from "components/user-select";
 import { useEffect } from "react";
 import { LongButton } from "unauthenticated-app";
 import { useAddProject, useEditProject } from "utils/project";
-import { useProjectModal } from "./util";
+import { useProjectModal, useProjectsQueryKey } from "./util";
 
 // 编辑、新建项目的模态框
 
 export const ProjectModal = () => {
   const { isModalOpen, closeModal, isEditLoading, isEditing, editingProject } =
     useProjectModal();
-
+  const queryKey = useProjectsQueryKey();
   const useMutateProject = isEditing ? useEditProject : useAddProject;
-  const { mutateAsync, isLoading: mutateLoading, error } = useMutateProject();
+  const {
+    mutateAsync,
+    isLoading: mutateLoading,
+    error,
+  } = useMutateProject(queryKey);
 
   const [form] = useForm();
 
