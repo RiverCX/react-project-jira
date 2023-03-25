@@ -24,7 +24,7 @@ export const ProjectListScreen = () => {
       <Row between={true}>
         <h1>项目列表</h1>
         <ButtonNoPadding type="link" onClick={openModal}>
-          编辑项目
+          创建项目
         </ButtonNoPadding>
       </Row>
 

@@ -1,12 +1,10 @@
-import { useCallback, useEffect } from "react";
-import { useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { Project } from "screens/project-list/project-list";
 import { useHttp } from "./http";
-import { useAsync } from "./use-async";
 
-// 封装所有对projects的异步操作
+// 使用react-query管理所有对projects的异步操作的状态
 
-// 获取项目列表
+// 根据搜索参数获取项目列表
 export const useProjects = (param?: Partial<Project>) => {
   const client = useHttp();
 
@@ -16,48 +14,59 @@ export const useProjects = (param?: Partial<Project>) => {
   );
 };
 
-// 编辑项目列表
-export const useEditProject = () => {
-  const { run, ...result } = useAsync();
+// 获取单个项目
+export const useProject = (id?: number) => {
   const client = useHttp();
-  // 需要定义一个纯函数，因为Hook不能在JSX中调用
-  const mutate = (params: Partial<Project>) => {
-    return run(
+
+  return useQuery<Project>(
+    ["project", { id }],
+    () => client(`projects/${id}`),
+    {
+      enabled: !!id, // id 为falsy值时不执行
+    }
+  );
+};
+
+// 编辑项目
+export const useEditProject = () => {
+  const client = useHttp();
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (params: Partial<Project>) =>
       client(`projects/${params.id}`, {
         data: params,
         method: "PATCH",
-      })
-    );
-  };
-  return { mutate, ...result };
+      }),
+    { onSuccess: () => queryClient.invalidateQueries(["projects"]) } // 成功后刷新
+  );
 };
 
 // 添加项目
 export const useAddProject = () => {
-  const { run, ...result } = useAsync();
   const client = useHttp();
-  // 需要定义一个纯函数，因为Hook不能在JSX中调用
-  const mutate = (params: Partial<Project>) => {
-    return run(
-      client(`projects/${params.id}`, {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (params: Partial<Project>) =>
+      client(`projects`, {
         data: params,
         method: "POST",
-      })
-    );
-  };
-  return { mutate, ...result };
+      }),
+    { onSuccess: () => queryClient.invalidateQueries(["projects"]) } // 成功后刷新
+  );
 };
 
 // 删除项目
 export const useDeleteProject = () => {
-  const { run, ...result } = useAsync();
   const client = useHttp();
-  const mutate = (params: Partial<Project>) => {
-    return run(
-      client(`projects/${params.id}`, {
+  const queryClient = useQueryClient();
+
+  return useMutation(
+    (id: number) =>
+      client(`projects/${id}`, {
         method: "DELETE",
-      })
-    );
-  };
-  return { mutate, ...result };
+      }),
+    { onSuccess: () => queryClient.invalidateQueries(["projects"]) } // 成功后刷新
+  );
 };

@@ -16,7 +16,7 @@ interface Config extends RequestInit {
 
 export const http = async (
   endpoint: string,
-  { data, token, headers, ...customConfig }: Config
+  { data, token, headers, ...customConfig }: Config = {}
 ) => {
   // 处理headers
   const config = {

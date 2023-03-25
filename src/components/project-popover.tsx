@@ -23,7 +23,7 @@ export const ProjectPopover = () => {
       </List>
       <Divider></Divider>
       <ButtonNoPadding type="link" onClick={openModal}>
-        编辑项目
+        创建项目
       </ButtonNoPadding>
     </ContentContainer>
   );
