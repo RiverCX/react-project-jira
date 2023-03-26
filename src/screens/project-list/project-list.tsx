@@ -1,4 +1,4 @@
-import { User } from "./search-panel";
+import { User } from "types/user";
 import { Dropdown, Modal, Table } from "antd";
 import dayjs from "dayjs";
 import { TableProps } from "antd/es/table";
@@ -7,17 +7,7 @@ import { Pin } from "components/pin";
 import { useDeleteProject, useEditProject } from "utils/project";
 import { ButtonNoPadding } from "components/lib";
 import { useProjectModal, useProjectsQueryKey } from "./util";
-
-// Projects列表
-
-export interface Project {
-  id: number;
-  name: string;
-  personId: number;
-  pin: boolean;
-  organization: string;
-  created: number;
-}
+import { Project } from "types/project";
 
 // TableProps是一个泛型
 interface ListProps extends TableProps<Project> {

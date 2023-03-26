@@ -1,4 +1,4 @@
-import { User } from "screens/project-list/search-panel";
+import { User } from "types/user";
 
 // 处理登入、注册、登出请求以及对token持久化处理
 // 可以用第三方如Firebase的SDK
