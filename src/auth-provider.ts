@@ -1,3 +1,4 @@
+import { AuthForm } from "types/auth-form";
 import { User } from "types/user";
 
 // 处理登入、注册、登出请求以及对token持久化处理
@@ -16,7 +17,7 @@ export const handleUserResponse = ({ user }: { user: User }) => {
 };
 
 // 发出login请求，并保存token
-export const login = async (data: { username: string; password: string }) => {
+export const login = async (data: AuthForm) => {
   return fetch(`${apiUrl}/login`, {
     method: "POST",
     headers: {
@@ -33,10 +34,7 @@ export const login = async (data: { username: string; password: string }) => {
 };
 
 // 发出register请求，并保存token
-export const register = async (data: {
-  username: string;
-  password: string;
-}) => {
+export const register = async (data: AuthForm) => {
   return fetch(`${apiUrl}/register`, {
     method: "POST",
     headers: {

@@ -2,6 +2,7 @@ import { useAuth } from "context/auth-context";
 import { Form, Input } from "antd";
 import { LongButton } from "unauthenticated-app";
 import { useAsync } from "utils/use-async";
+import { AuthForm } from "types/auth-form";
 
 // 登录组件
 export const LoginScreen = ({
@@ -13,7 +14,7 @@ export const LoginScreen = ({
   // 不能在此处使用error状态，因为此时error还没有更新（异步更新）
   const { isLoading, run } = useAsync(undefined, { throwOnError: true });
 
-  const handleSubmit = (values: { username: string; password: string }) => {
+  const handleSubmit = (values: AuthForm) => {
     run(login(values).catch((error) => onError(error)));
   };
 

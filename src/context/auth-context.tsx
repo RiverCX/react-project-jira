@@ -5,11 +5,7 @@ import { http } from "utils/http";
 import { useAsync } from "utils/use-async";
 import { FullPageErrorFallback, FullPageLoading } from "components/lib";
 import { useQueryClient } from "react-query";
-
-interface AuthForm {
-  username: string;
-  password: string;
-}
+import { AuthForm } from "../types/auth-form";
 
 //用全局状态保存登陆用户信息
 
