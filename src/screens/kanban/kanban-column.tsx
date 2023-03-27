@@ -4,7 +4,8 @@ import { useTaskTypes } from "utils/task-type";
 import { useSearchTasks } from "./util";
 import bugIcon from "assets/bug.svg";
 import taskIcon from "assets/task.svg";
-import { Card } from "antd";
+import { Card, Spin } from "antd";
+import { CreateTask } from "./create-task";
 
 export const TaskTypeIcon = ({ typeId }: { typeId: number }) => {
   const { data: types } = useTaskTypes();
@@ -19,6 +20,7 @@ export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
   return (
     <Container>
       <h3>{kanban.name}</h3>
+
       <TasksContainer>
         {kanbanTasks?.map((task) => (
           <Card key={task.id} style={{ marginBottom: "0.5rem" }}>
@@ -26,12 +28,13 @@ export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
             <TaskTypeIcon typeId={task.typeId} />
           </Card>
         ))}
+        <CreateTask kanbanId={kanban.id} />
       </TasksContainer>
     </Container>
   );
 };
 
-const Container = styled.div`
+export const Container = styled.div`
   min-width: 27rem;
   display: flex;
   flex-direction: column;

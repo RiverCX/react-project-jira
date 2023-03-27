@@ -5,30 +5,26 @@ import { useProject } from "utils/project";
 import { useTasks } from "utils/task";
 import { useUrlQueryParam } from "utils/url";
 
+// 项目ID和项目数据
 export const useCurrentProjectId = () => {
   const { projectId } = useParams();
   return Number(projectId);
 };
 
-// 返回当前项目数据、项目的看板
-
 export const useCurrentProject = () => {
   return useProject(useCurrentProjectId());
 };
 
+// 看板数据、看板 QueryKey （用于乐观更新）
 export const useProjectKanbans = () => {
   return useKanbans({ projectId: useCurrentProjectId() });
 };
 
-// 根据搜索返回任务数据
-
-export const useSearchTasks = () => {
-  const [param, _] = useTasksSearchParams();
-  return useTasks(param);
+export const useKanbansQueryKey = () => {
+  return ["kanbans", { projectId: useCurrentProjectId() }];
 };
 
-// 搜索任务的状态 和 queryKey
-
+// 任务数据、搜索状态和 QueryKey（用于乐观更新）
 export const useTasksSearchParams = () => {
   const [param, setParam] = useUrlQueryParam([
     "name",
@@ -52,6 +48,11 @@ export const useTasksSearchParams = () => {
     ),
     setParam,
   ] as const;
+};
+
+export const useSearchTasks = () => {
+  const [param, _] = useTasksSearchParams();
+  return useTasks(param);
 };
 
 export const useTasksQueryKey = () => {

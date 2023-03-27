@@ -34,6 +34,6 @@ const Aside = styled.aside`
 
 const Main = styled.div`
   display: flex;
-  padding: 3.2rem;
   box-shadow: -5px 0 5px -5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
 `;
