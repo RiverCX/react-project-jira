@@ -7,13 +7,22 @@ import {
   useDeleteConfig,
 } from "./use-optimistic-options";
 
-// 获取任务
+// 获取任务列表
 export const useTasks = (param?: Partial<Task>) => {
   const client = useHttp();
 
   return useQuery<Task[]>(["tasks", param], () =>
     client("tasks", { data: param })
   );
+};
+
+// 获取单个任务
+export const useTask = (id?: number) => {
+  const client = useHttp();
+
+  return useQuery<Task>(["task", { id }], () => client(`tasks/${id}`), {
+    enabled: !!id, // id 为falsy值时不执行
+  });
 };
 
 // 编辑任务
