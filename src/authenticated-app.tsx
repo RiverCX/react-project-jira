@@ -20,4 +20,7 @@ const Container = styled.div`
   height: 100vh;
 `;
 
-const Main = styled.main``;
+const Main = styled.main`
+  display: flex;
+  overflow: hidden;
+`;

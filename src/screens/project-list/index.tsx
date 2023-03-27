@@ -20,7 +20,7 @@ export const ProjectListScreen = () => {
 
   return (
     <Container>
-      <Row between={true}>
+      <Row between={true} marginBottom={2}>
         <h1>项目列表</h1>
         <ButtonNoPadding type="link" onClick={openModal}>
           创建项目
@@ -35,5 +35,6 @@ export const ProjectListScreen = () => {
 };
 
 const Container = styled.div`
+  width: 100%;
   padding: 3.2rem;
 `;
