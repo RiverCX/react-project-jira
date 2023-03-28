@@ -5,6 +5,7 @@ import { useAuth } from "context/auth-context";
 import { resetRoute } from "utils";
 import { ButtonNoPadding, Row } from "./lib";
 import { ProjectPopover } from "./project-popover";
+import { UserPopover } from "./user-popover";
 
 export const PageHeader = () => {
   const { user, logout } = useAuth();
@@ -15,7 +16,7 @@ export const PageHeader = () => {
           <SoftwareLogo width="18rem" color="rgb(38, 132, 255)" />
         </ButtonNoPadding>
         <ProjectPopover />
-        <span>用户</span>
+        <UserPopover />
       </Row>
       <Dropdown
         menu={{

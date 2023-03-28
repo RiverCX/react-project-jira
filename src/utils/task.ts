@@ -78,7 +78,7 @@ export const useReorderTask = (queryKey: QueryKey) => {
   const client = useHttp();
 
   return useMutation(
-    (param: sortTaskParam) =>
+    (param: Partial<sortTaskParam>) =>
       client(`tasks/reorder`, {
         method: "POST",
         data: param,

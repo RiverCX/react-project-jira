@@ -104,13 +104,16 @@ destination.index 拖拽的目标在数组中的index
 */
 
 const useDragEnd = () => {
-  const { data: kanbans } = useKanbans();
+  const { data: kanbans } = useProjectKanbans();
   const { data: tasks } = useSearchTasks();
+
   const { mutate: reorderKanban } = useReorderKanban(useKanbansQueryKey());
   const { mutate: reorderTask } = useReorderTask(useTasksQueryKey());
 
   return useCallback(
     ({ source, destination, type }: DropResult) => {
+      console.log(source, destination);
+
       if (!destination) {
         return;
       }
@@ -119,7 +122,7 @@ const useDragEnd = () => {
         const fromId = kanbans?.[source.index].id;
         const referenceId = kanbans?.[destination.index].id;
         if (!fromId || !referenceId || fromId === referenceId) return;
-        const type = source.index < destination.index ? "after" : "before";
+        const type = destination.index > source.index ? "after" : "before";
         reorderKanban({ fromId, referenceId, type }); // 调用排序接口
       }
 
@@ -135,7 +138,7 @@ const useDragEnd = () => {
           (task) => task.kanbanId === toKanbanId
         )?.[destination.index]?.id;
 
-        if (!fromId || !referenceId || fromId === referenceId) return;
+        if (fromId === referenceId) return;
         const type =
           fromKanbanId === toKanbanId && destination.index > source.index
             ? "after"

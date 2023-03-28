@@ -7,7 +7,7 @@ import { ButtonNoPadding } from "./lib";
 // 项目的Popover组件
 
 export const ProjectPopover = () => {
-  const { data: projects } = useProjects();
+  const { data: projects, refetch } = useProjects();
   const pinnedProjects = projects?.filter((project) => project.pin);
   const { openModal } = useProjectModal();
 
@@ -29,7 +29,11 @@ export const ProjectPopover = () => {
   );
 
   return (
-    <Popover placement="bottom" content={content}>
+    <Popover
+      placement="bottom"
+      content={content}
+      onOpenChange={() => refetch()}
+    >
       <span>项目</span>
     </Popover>
   );
