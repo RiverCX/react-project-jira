@@ -1,8 +1,19 @@
 import styled from "@emotion/styled";
 import { Menu } from "antd";
-import { NavLink, Outlet } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 
 export const ProjectScreen = () => {
+  // 控制导航栏高亮
+  const [selectedKeys, setSelectedKeys] = useState(["kanban"]);
+  let location = useLocation();
+
+  useEffect(() => {
+    const key = location.pathname.split("/")[3] || "kanban";
+    setSelectedKeys([key]);
+    console.log([key]);
+  }, [location]);
+
   return (
     <Container>
       <Aside>
@@ -18,6 +29,8 @@ export const ProjectScreen = () => {
               label: <NavLink to={"epic"}>任务组</NavLink>,
             },
           ]}
+          selectedKeys={selectedKeys}
+          onSelect={({ key }) => setSelectedKeys([key])}
         />
       </Aside>
       <Main>
@@ -30,6 +43,7 @@ export const ProjectScreen = () => {
 const Container = styled.div`
   display: grid;
   grid-template-columns: 16rem 1fr;
+  width: 100%;
 `;
 
 const Aside = styled.aside`
