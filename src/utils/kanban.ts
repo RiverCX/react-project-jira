@@ -38,3 +38,21 @@ export const useDeleteKanban = (queryKey: QueryKey) => {
     useDeleteConfig(queryKey) // 乐观更新配置
   );
 };
+
+export interface sortParam {
+  fromId: number;
+  referenceId: number;
+  type: "before" | "after";
+}
+
+// 看板排序
+export const useReorderKanban = () => {
+  const client = useHttp();
+
+  return useMutation((param: sortParam) =>
+    client(`kanbans/reorder`, {
+      method: "POST",
+      data: param,
+    })
+  );
+};

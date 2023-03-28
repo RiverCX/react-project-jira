@@ -1,6 +1,7 @@
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { Task } from "types/task";
 import { useHttp } from "./http";
+import { sortParam } from "./kanban";
 import {
   useEditConfig,
   useAddConfig,
@@ -63,5 +64,22 @@ export const useDeleteTask = (queryKey: QueryKey) => {
         method: "DELETE",
       }),
     useDeleteConfig(queryKey) // 乐观更新配置
+  );
+};
+
+// 任务排序
+interface sortTaskParam extends sortParam {
+  fromKanbanId: number;
+  toKanbanId: number;
+}
+
+export const useReorderTask = () => {
+  const client = useHttp();
+
+  return useMutation((param: sortTaskParam) =>
+    client(`tasks/reorder`, {
+      method: "POST",
+      data: param,
+    })
   );
 };

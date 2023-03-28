@@ -6,14 +6,19 @@ export const ProjectScreen = () => {
   return (
     <Container>
       <Aside>
-        <Menu mode="inline">
-          <Menu.Item>
-            <NavLink to={"kanban"}>看板</NavLink>
-          </Menu.Item>
-          <Menu.Item>
-            <NavLink to={"epic"}>任务组</NavLink>
-          </Menu.Item>
-        </Menu>
+        <Menu
+          mode="inline"
+          items={[
+            {
+              key: "kanban",
+              label: <NavLink to={"kanban"}>看板</NavLink>,
+            },
+            {
+              key: "epic",
+              label: <NavLink to={"epic"}>任务组</NavLink>,
+            },
+          ]}
+        />
       </Aside>
       <Main>
         <Outlet />
