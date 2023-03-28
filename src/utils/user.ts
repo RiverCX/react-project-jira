@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { QueryKey, useMutation, useQuery } from "react-query";
 import { User } from "types/user";
 import { useHttp } from "./http";

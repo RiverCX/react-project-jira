@@ -1,5 +1,5 @@
 import styled from "@emotion/styled";
-import { Popover, List, Typography, Divider } from "antd";
+import { Popover, List, Typography } from "antd";
 import { useUsers } from "utils/user";
 
 // 用户的Popover组件

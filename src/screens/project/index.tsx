@@ -11,7 +11,6 @@ export const ProjectScreen = () => {
   useEffect(() => {
     const key = location.pathname.split("/")[3] || "kanban";
     setSelectedKeys([key]);
-    console.log([key]);
   }, [location]);
 
   return (

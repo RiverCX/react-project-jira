@@ -8,7 +8,7 @@ import {
   DropResult,
 } from "react-beautiful-dnd";
 import { useDocumentTitle } from "utils";
-import { useKanbans, useReorderKanban } from "utils/kanban";
+import { useReorderKanban } from "utils/kanban";
 import { useReorderTask } from "utils/task";
 import { CreateKanban } from "./create-kanban";
 import { KanbanColumn } from "./kanban-column";
@@ -112,8 +112,6 @@ const useDragEnd = () => {
 
   return useCallback(
     ({ source, destination, type }: DropResult) => {
-      console.log(source, destination);
-
       if (!destination) {
         return;
       }
