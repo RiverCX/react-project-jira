@@ -6,6 +6,7 @@ import {
   useEditConfig,
   useAddConfig,
   useDeleteConfig,
+  useReorderTaskConfig,
 } from "./use-optimistic-options";
 
 // 获取任务列表
@@ -73,13 +74,15 @@ interface sortTaskParam extends sortParam {
   toKanbanId: number;
 }
 
-export const useReorderTask = () => {
+export const useReorderTask = (queryKey: QueryKey) => {
   const client = useHttp();
 
-  return useMutation((param: sortTaskParam) =>
-    client(`tasks/reorder`, {
-      method: "POST",
-      data: param,
-    })
+  return useMutation(
+    (param: sortTaskParam) =>
+      client(`tasks/reorder`, {
+        method: "POST",
+        data: param,
+      }),
+    useReorderTaskConfig(queryKey)
   );
 };

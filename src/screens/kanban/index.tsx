@@ -19,6 +19,7 @@ import {
   useCurrentProject,
   useSearchTasks,
   useKanbansQueryKey,
+  useTasksQueryKey,
 } from "./util";
 
 export const KanbanScreen = () => {
@@ -105,8 +106,8 @@ destination.index 拖拽的目标在数组中的index
 const useDragEnd = () => {
   const { data: kanbans } = useKanbans();
   const { data: tasks } = useSearchTasks();
-  const { mutate: reorderKanban } = useReorderKanban();
-  const { mutate: reorderTask } = useReorderTask();
+  const { mutate: reorderKanban } = useReorderKanban(useKanbansQueryKey());
+  const { mutate: reorderTask } = useReorderTask(useTasksQueryKey());
 
   return useCallback(
     ({ source, destination, type }: DropResult) => {
