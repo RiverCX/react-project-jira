@@ -1,5 +1,6 @@
 import styled from "@emotion/styled";
 import { Spin } from "antd";
+import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { useDocumentTitle } from "utils";
 import { CreateKanban } from "./create-kanban";
 import { KanbanColumn } from "./kanban-column";
@@ -13,22 +14,58 @@ export const KanbanScreen = () => {
   const { data: kanbans, isLoading: kanbanLoading } = useProjectKanbans();
   const { isLoading: taskLoading } = useSearchTasks();
   const isLoading = kanbanLoading || taskLoading;
+
   return (
-    <Container>
-      <h1>{currentProject?.name}看板</h1>
-      <SearchPanel />
-      {isLoading ? (
-        <Spin size={"large"} />
-      ) : (
-        <ColumnsContainer>
-          {kanbans?.map((kanban) => (
-            <KanbanColumn kanban={kanban} key={kanban.id}></KanbanColumn>
-          ))}
-          <CreateKanban />
-        </ColumnsContainer>
-      )}
-      <TaskModal />
-    </Container>
+    <DragDropContext onDragEnd={() => {}}>
+      <Container>
+        <h1>{currentProject?.name}看板</h1>
+        <SearchPanel />
+        {isLoading ? (
+          <Spin size={"large"} />
+        ) : (
+          <ColumnsContainer>
+            <Droppable
+              droppableId="kanban"
+              type="COLUMN"
+              direction="horizontal"
+            >
+              {(provided) => (
+                <div
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  style={{ display: "flex" }}
+                >
+                  {kanbans?.map((kanban, index) => (
+                    <Draggable
+                      key={kanban.id}
+                      draggableId={"kanban" + kanban.id}
+                      index={index}
+                    >
+                      {(provided) => (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                          style={{ display: "flex" }}
+                        >
+                          <KanbanColumn
+                            kanban={kanban}
+                            key={kanban.id}
+                          ></KanbanColumn>
+                        </div>
+                      )}
+                    </Draggable>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+            <CreateKanban />
+          </ColumnsContainer>
+        )}
+        <TaskModal />
+      </Container>
+    </DragDropContext>
   );
 };
 

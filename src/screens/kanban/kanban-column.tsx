@@ -15,6 +15,7 @@ import { Task } from "types/task";
 import { Row } from "components/lib";
 import { useDeleteKanban } from "utils/kanban";
 import { Mark } from "components/mark";
+import { Draggable, Droppable } from "react-beautiful-dnd";
 
 export const TaskTypeIcon = ({ typeId }: { typeId: number }) => {
   const { data: types } = useTaskTypes();
@@ -83,9 +84,38 @@ export const KanbanColumn = ({ kanban }: { kanban: Kanban }) => {
       </Row>
 
       <TasksContainer>
-        {kanbanTasks?.map((task) => (
-          <TaskCard task={task} key={task.id} />
-        ))}
+        <Droppable
+          type={"ROW"}
+          direction={"vertical"}
+          droppableId={String(kanban.id)}
+        >
+          {(provided) => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              style={{ minHeight: "1rem" }}
+            >
+              {kanbanTasks?.map((task, index) => (
+                <Draggable
+                  key={task.id}
+                  draggableId={"task" + task.id}
+                  index={index}
+                >
+                  {(provided) => (
+                    <div
+                      ref={provided.innerRef}
+                      {...provided.draggableProps}
+                      {...provided.dragHandleProps}
+                    >
+                      <TaskCard task={task} key={task.id} />
+                    </div>
+                  )}
+                </Draggable>
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+        </Droppable>
         <CreateTask kanbanId={kanban.id} />
       </TasksContainer>
     </Container>
